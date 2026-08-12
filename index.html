@@ -17,6 +17,42 @@ body {
     padding: 20px;
     color: #111;
 }
+    .top-nav {
+    max-width: 500px;
+    margin: 0 auto 20px auto;
+    background: #111;
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nav-logo {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 7px 10px;
+    border-radius: 6px;
+}
+
+.nav-links a:hover {
+    background: #333;
+}
 
 .container {
     max-width: 500px;
@@ -155,7 +191,7 @@ Calculate percentages and convert currencies around the world.
 
 <div class="tool">
 
-<h2>1️⃣ Percentage of a Number</h2>
+<h2 id="percentage">1️⃣ Percentage of a Number</h2>
 
 <label>Percentage (%)</label>
 <input type="number" id="percent1" placeholder="Example: 25">
@@ -218,7 +254,7 @@ Your answer will appear here.
 
 <div class="tool">
 
-<h2>🌍 International Currency Converter</h2>
+<h2 id="currency">🌍 International Currency Converter</h2>
 
 <label>Amount</label>
 <input type="number" id="currencyAmount" placeholder="Example: 100" value="1">
@@ -252,7 +288,7 @@ Exchange rate information will appear here.
 
 <div class="tool">
 
-<h2>📊 Latest Exchange Rates</h2>
+<h2 id="rates">📊 Latest Exchange Rates</h2>
 
 <p class="rate-info">
 Latest available rates for popular currencies.
