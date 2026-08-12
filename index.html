@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Midas Percentage Calculator</title>
+<title>Midas Calculator</title>
 
 <style>
 * {
@@ -15,11 +15,12 @@ body {
     background: #f2f2f2;
     margin: 0;
     padding: 20px;
+    color: #111;
 }
 
 .container {
-    max-width: 480px;
-    margin: 30px auto;
+    max-width: 500px;
+    margin: 20px auto;
     background: white;
     padding: 25px;
     border-radius: 18px;
@@ -56,12 +57,14 @@ label {
     margin-bottom: 6px;
 }
 
-input {
+input,
+select {
     width: 100%;
     padding: 13px;
     border: 1px solid #ccc;
     border-radius: 9px;
     font-size: 16px;
+    background: white;
 }
 
 button {
@@ -89,6 +92,51 @@ button:hover {
     font-weight: bold;
     min-height: 45px;
 }
+
+.rate-info {
+    margin-top: 12px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.rate-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.rate-table th,
+.rate-table td {
+    padding: 10px 5px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.rate-table th {
+    font-weight: bold;
+}
+
+.loading {
+    text-align: center;
+    color: #666;
+    padding: 15px;
+}
+
+.error {
+    color: #b00020;
+    text-align: center;
+    padding: 10px;
+}
+
+.small-note {
+    text-align: center;
+    color: #777;
+    font-size: 12px;
+    margin-top: 20px;
+    line-height: 1.5;
+}
 </style>
 </head>
 
@@ -99,10 +147,14 @@ button:hover {
 <h1>🧮 Midas Calculator</h1>
 
 <p class="subtitle">
-Three useful percentage calculators in one place.
+Calculate percentages and convert currencies around the world.
 </p>
 
+
+<!-- PERCENTAGE CALCULATOR 1 -->
+
 <div class="tool">
+
 <h2>1️⃣ Percentage of a Number</h2>
 
 <label>Percentage (%)</label>
@@ -113,10 +165,17 @@ Three useful percentage calculators in one place.
 
 <button onclick="percentageOfNumber()">Calculate</button>
 
-<div class="result" id="result1">Your answer will appear here.</div>
+<div class="result" id="result1">
+Your answer will appear here.
 </div>
 
+</div>
+
+
+<!-- PERCENTAGE CALCULATOR 2 -->
+
 <div class="tool">
+
 <h2>2️⃣ What Percentage?</h2>
 
 <label>Part</label>
@@ -127,10 +186,17 @@ Three useful percentage calculators in one place.
 
 <button onclick="whatPercentage()">Calculate</button>
 
-<div class="result" id="result2">Your answer will appear here.</div>
+<div class="result" id="result2">
+Your answer will appear here.
 </div>
 
+</div>
+
+
+<!-- PERCENTAGE CALCULATOR 3 -->
+
 <div class="tool">
+
 <h2>3️⃣ Percentage Increase or Decrease</h2>
 
 <label>Original Number</label>
@@ -141,73 +207,528 @@ Three useful percentage calculators in one place.
 
 <button onclick="percentageChange()">Calculate</button>
 
-<div class="result" id="result3">Your answer will appear here.</div>
+<div class="result" id="result3">
+Your answer will appear here.
 </div>
 
 </div>
+
+
+<!-- INTERNATIONAL CURRENCY CONVERTER -->
+
+<div class="tool">
+
+<h2>🌍 International Currency Converter</h2>
+
+<label>Amount</label>
+<input type="number" id="currencyAmount" placeholder="Example: 100" value="1">
+
+<label>From Currency</label>
+<select id="fromCurrency">
+<option>Loading currencies...</option>
+</select>
+
+<label>To Currency</label>
+<select id="toCurrency">
+<option>Loading currencies...</option>
+</select>
+
+<button onclick="convertCurrency()">
+Convert Currency
+</button>
+
+<div class="result" id="currencyResult">
+Enter an amount and choose currencies.
+</div>
+
+<div class="rate-info" id="rateInfo">
+Exchange rate information will appear here.
+</div>
+
+</div>
+
+
+<!-- DAILY EXCHANGE RATES -->
+
+<div class="tool">
+
+<h2>📊 Latest Exchange Rates</h2>
+
+<p class="rate-info">
+Latest available rates for popular currencies.
+</p>
+
+<button onclick="loadDailyRates()">
+🔄 Refresh Exchange Rates
+</button>
+
+<div id="dailyRates">
+<div class="loading">
+Loading exchange rates...
+</div>
+</div>
+
+</div>
+
+
+<p class="small-note">
+Exchange rates are provided for informational purposes and may differ
+from rates offered by banks, payment services, or money changers.
+</p>
+
+</div>
+
 
 <script>
 
+/* =========================
+   PERCENTAGE CALCULATOR 1
+========================= */
+
 function percentageOfNumber() {
-    const percent = parseFloat(document.getElementById("percent1").value);
-    const number = parseFloat(document.getElementById("number1").value);
+
+    const percent =
+        parseFloat(document.getElementById("percent1").value);
+
+    const number =
+        parseFloat(document.getElementById("number1").value);
 
     if (isNaN(percent) || isNaN(number)) {
+
         document.getElementById("result1").innerText =
             "Please enter both numbers.";
+
         return;
     }
 
     const answer = (percent / 100) * number;
 
     document.getElementById("result1").innerText =
-        percent + "% of " + number.toLocaleString() +
-        " = " + answer.toLocaleString();
+        percent + "% of " +
+        number.toLocaleString() +
+        " = " +
+        answer.toLocaleString();
 }
 
+
+/* =========================
+   PERCENTAGE CALCULATOR 2
+========================= */
+
 function whatPercentage() {
-    const part = parseFloat(document.getElementById("part").value);
-    const total = parseFloat(document.getElementById("total").value);
+
+    const part =
+        parseFloat(document.getElementById("part").value);
+
+    const total =
+        parseFloat(document.getElementById("total").value);
 
     if (isNaN(part) || isNaN(total) || total === 0) {
+
         document.getElementById("result2").innerText =
             "Please enter valid numbers.";
+
         return;
     }
 
     const answer = (part / total) * 100;
 
     document.getElementById("result2").innerText =
-        part.toLocaleString() + " is " +
-        answer.toFixed(2) + "% of " +
+        part.toLocaleString() +
+        " is " +
+        answer.toFixed(2) +
+        "% of " +
         total.toLocaleString();
 }
 
+
+/* =========================
+   PERCENTAGE CALCULATOR 3
+========================= */
+
 function percentageChange() {
-    const original = parseFloat(document.getElementById("original").value);
-    const newNumber = parseFloat(document.getElementById("newNumber").value);
+
+    const original =
+        parseFloat(document.getElementById("original").value);
+
+    const newNumber =
+        parseFloat(document.getElementById("newNumber").value);
 
     if (isNaN(original) || isNaN(newNumber) || original === 0) {
+
         document.getElementById("result3").innerText =
             "Please enter valid numbers.";
+
         return;
     }
 
-    const change = ((newNumber - original) / original) * 100;
+    const change =
+        ((newNumber - original) / original) * 100;
 
     if (change > 0) {
+
         document.getElementById("result3").innerText =
-            "Percentage increase: " + change.toFixed(2) + "%";
+            "Percentage increase: " +
+            change.toFixed(2) +
+            "%";
+
     } else if (change < 0) {
+
         document.getElementById("result3").innerText =
-            "Percentage decrease: " + Math.abs(change).toFixed(2) + "%";
+            "Percentage decrease: " +
+            Math.abs(change).toFixed(2) +
+            "%";
+
     } else {
+
         document.getElementById("result3").innerText =
             "There is no percentage change.";
     }
 }
 
+
+/* =========================
+   INTERNATIONAL CURRENCIES
+========================= */
+
+const API = "https://api.frankfurter.dev/v2";
+
+let currencyList = [];
+
+
+/* Load currencies */
+
+async function loadCurrencies() {
+
+    try {
+
+        const response =
+            await fetch(API + "/currencies");
+
+        if (!response.ok) {
+            throw new Error("Could not load currencies.");
+        }
+
+        const currencies =
+            await response.json();
+
+        currencyList =
+            currencies.filter(currency =>
+                currency.iso_code &&
+                currency.name
+            );
+
+        currencyList.sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
+
+        const from =
+            document.getElementById("fromCurrency");
+
+        const to =
+            document.getElementById("toCurrency");
+
+        from.innerHTML = "";
+        to.innerHTML = "";
+
+        currencyList.forEach(currency => {
+
+            const option1 =
+                document.createElement("option");
+
+            option1.value =
+                currency.iso_code;
+
+            option1.textContent =
+                currency.iso_code +
+                " — " +
+                currency.name;
+
+            from.appendChild(option1);
+
+
+            const option2 =
+                document.createElement("option");
+
+            option2.value =
+                currency.iso_code;
+
+            option2.textContent =
+                currency.iso_code +
+                " — " +
+                currency.name;
+
+            to.appendChild(option2);
+        });
+
+
+        /* Set useful defaults */
+
+        if (currencyList.some(c => c.iso_code === "USD")) {
+            from.value = "USD";
+        }
+
+        if (currencyList.some(c => c.iso_code === "NGN")) {
+            to.value = "NGN";
+        }
+
+    } catch (error) {
+
+        document.getElementById("fromCurrency").innerHTML =
+            "<option>Unable to load currencies</option>";
+
+        document.getElementById("toCurrency").innerHTML =
+            "<option>Unable to load currencies</option>";
+
+        console.error(error);
+    }
+}
+
+
+/* Convert currencies */
+
+async function convertCurrency() {
+
+    const amount =
+        parseFloat(
+            document.getElementById("currencyAmount").value
+        );
+
+    const from =
+        document.getElementById("fromCurrency").value;
+
+    const to =
+        document.getElementById("toCurrency").value;
+
+    const result =
+        document.getElementById("currencyResult");
+
+    const info =
+        document.getElementById("rateInfo");
+
+
+    if (isNaN(amount) || amount <= 0) {
+
+        result.innerText =
+            "Please enter a valid amount.";
+
+        return;
+    }
+
+
+    if (!from || !to) {
+
+        result.innerText =
+            "Please choose both currencies.";
+
+        return;
+    }
+
+
+    if (from === to) {
+
+        result.innerText =
+            amount.toLocaleString() +
+            " " +
+            from +
+            " = " +
+            amount.toLocaleString() +
+            " " +
+            to;
+
+        info.innerText =
+            "1 " + from + " = 1 " + to;
+
+        return;
+    }
+
+
+    result.innerText =
+        "Getting latest exchange rate...";
+
+    info.innerText = "";
+
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/rate/" +
+                encodeURIComponent(from) +
+                "/" +
+                encodeURIComponent(to)
+            );
+
+        if (!response.ok) {
+            throw new Error("Rate unavailable.");
+        }
+
+        const data =
+            await response.json();
+
+        const converted =
+            amount * data.rate;
+
+
+        result.innerText =
+            amount.toLocaleString() +
+            " " +
+            from +
+            " = " +
+            converted.toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 4
+                }
+            ) +
+            " " +
+            to;
+
+
+        info.innerText =
+            "1 " +
+            from +
+            " = " +
+            data.rate.toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 6
+                }
+            ) +
+            " " +
+            to +
+            " • Rate date: " +
+            data.date;
+
+    } catch (error) {
+
+        result.innerText =
+            "Sorry, the exchange rate could not be loaded.";
+
+        info.innerText =
+            "Please try again.";
+
+        console.error(error);
+    }
+}
+
+
+/* =========================
+   DAILY EXCHANGE RATES
+========================= */
+
+async function loadDailyRates() {
+
+    const container =
+        document.getElementById("dailyRates");
+
+    container.innerHTML =
+        '<div class="loading">Loading latest rates...</div>';
+
+
+    const popularCurrencies = [
+        "USD",
+        "GBP",
+        "EUR",
+        "NGN",
+        "CAD",
+        "AUD",
+        "JPY",
+        "CNY",
+        "CHF",
+        "ZAR",
+        "AED",
+        "SAR"
+    ];
+
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/rates?base=USD&quotes=" +
+                popularCurrencies.join(",")
+            );
+
+        if (!response.ok) {
+            throw new Error("Could not load rates.");
+        }
+
+        const data =
+            await response.json();
+
+
+        const rates =
+            data.filter(item =>
+                popularCurrencies.includes(item.quote)
+            );
+
+
+        let html = `
+        <table class="rate-table">
+
+        <thead>
+        <tr>
+        <th>Currency</th>
+        <th>1 USD =</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        `;
+
+
+        rates.forEach(item => {
+
+            html += `
+            <tr>
+            <td>${item.quote}</td>
+            <td>${Number(item.rate).toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 6
+                }
+            )}</td>
+            </tr>
+            `;
+        });
+
+
+        html += `
+        </tbody>
+        </table>
+
+        <div class="rate-info">
+        Rate date: ${rates.length ? rates[0].date : "Unavailable"}
+        </div>
+        `;
+
+
+        container.innerHTML = html;
+
+
+    } catch (error) {
+
+        container.innerHTML =
+            '<div class="error">' +
+            'Unable to load exchange rates. ' +
+            'Please try again.' +
+            '</div>';
+
+        console.error(error);
+    }
+}
+
+
+/* Start the currency features */
+
+loadCurrencies();
+
+loadDailyRates();
+
 </script>
 
 </body>
-</html>
+    </html>
