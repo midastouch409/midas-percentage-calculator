@@ -6,6 +6,10 @@
 <title>Midas Percentage Calculator</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: #f2f2f2;
@@ -14,17 +18,18 @@ body {
 }
 
 .container {
-    max-width: 450px;
-    margin: 50px auto;
+    max-width: 480px;
+    margin: 30px auto;
     background: white;
     padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 10px;
+    font-size: 34px;
+    margin-bottom: 8px;
 }
 
 .subtitle {
@@ -33,31 +38,41 @@ h1 {
     margin-bottom: 25px;
 }
 
+.tool {
+    border-top: 1px solid #ddd;
+    padding-top: 22px;
+    margin-top: 22px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
 label {
     display: block;
-    margin-top: 15px;
-    margin-bottom: 6px;
     font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 6px;
 }
 
 input {
     width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
+    padding: 13px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 9px;
     font-size: 16px;
 }
 
 button {
     width: 100%;
     padding: 13px;
-    margin-top: 20px;
+    margin-top: 18px;
     border: none;
-    border-radius: 8px;
+    border-radius: 9px;
     background: #111;
     color: white;
-    font-size: 17px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -65,14 +80,14 @@ button:hover {
     background: #333;
 }
 
-#result {
-    margin-top: 20px;
-    padding: 15px;
+.result {
+    margin-top: 15px;
+    padding: 14px;
     background: #f1f1f1;
-    border-radius: 8px;
+    border-radius: 9px;
     text-align: center;
-    font-size: 18px;
     font-weight: bold;
+    min-height: 45px;
 }
 </style>
 </head>
@@ -83,38 +98,116 @@ button:hover {
 
 <h1>🧮 Midas Calculator</h1>
 
-<p class="subtitle">Calculate percentages quickly and easily.</p>
+<p class="subtitle">
+Three useful percentage calculators in one place.
+</p>
 
-<label for="percentage">Percentage (%)</label>
-<input type="number" id="percentage" placeholder="Example: 25">
+<div class="tool">
+<h2>1️⃣ Percentage of a Number</h2>
 
-<label for="number">Number</label>
-<input type="number" id="number" placeholder="Example: 40000">
+<label>Percentage (%)</label>
+<input type="number" id="percent1" placeholder="Example: 25">
 
-<button onclick="calculatePercentage()">Calculate</button>
+<label>Number</label>
+<input type="number" id="number1" placeholder="Example: 40000">
 
-<div id="result">Your answer will appear here.</div>
+<button onclick="percentageOfNumber()">Calculate</button>
+
+<div class="result" id="result1">Your answer will appear here.</div>
+</div>
+
+<div class="tool">
+<h2>2️⃣ What Percentage?</h2>
+
+<label>Part</label>
+<input type="number" id="part" placeholder="Example: 10000">
+
+<label>Total</label>
+<input type="number" id="total" placeholder="Example: 40000">
+
+<button onclick="whatPercentage()">Calculate</button>
+
+<div class="result" id="result2">Your answer will appear here.</div>
+</div>
+
+<div class="tool">
+<h2>3️⃣ Percentage Increase or Decrease</h2>
+
+<label>Original Number</label>
+<input type="number" id="original" placeholder="Example: 40000">
+
+<label>New Number</label>
+<input type="number" id="newNumber" placeholder="Example: 50000">
+
+<button onclick="percentageChange()">Calculate</button>
+
+<div class="result" id="result3">Your answer will appear here.</div>
+</div>
 
 </div>
 
 <script>
-function calculatePercentage() {
-    const percentage = parseFloat(document.getElementById("percentage").value);
-    const number = parseFloat(document.getElementById("number").value);
 
-    if (isNaN(percentage) || isNaN(number)) {
-        document.getElementById("result").innerText =
+function percentageOfNumber() {
+    const percent = parseFloat(document.getElementById("percent1").value);
+    const number = parseFloat(document.getElementById("number1").value);
+
+    if (isNaN(percent) || isNaN(number)) {
+        document.getElementById("result1").innerText =
             "Please enter both numbers.";
         return;
     }
 
-    const answer = (percentage / 100) * number;
+    const answer = (percent / 100) * number;
 
-    document.getElementById("result").innerText =
-        percentage + "% of " + number.toLocaleString() +
+    document.getElementById("result1").innerText =
+        percent + "% of " + number.toLocaleString() +
         " = " + answer.toLocaleString();
 }
+
+function whatPercentage() {
+    const part = parseFloat(document.getElementById("part").value);
+    const total = parseFloat(document.getElementById("total").value);
+
+    if (isNaN(part) || isNaN(total) || total === 0) {
+        document.getElementById("result2").innerText =
+            "Please enter valid numbers.";
+        return;
+    }
+
+    const answer = (part / total) * 100;
+
+    document.getElementById("result2").innerText =
+        part.toLocaleString() + " is " +
+        answer.toFixed(2) + "% of " +
+        total.toLocaleString();
+}
+
+function percentageChange() {
+    const original = parseFloat(document.getElementById("original").value);
+    const newNumber = parseFloat(document.getElementById("newNumber").value);
+
+    if (isNaN(original) || isNaN(newNumber) || original === 0) {
+        document.getElementById("result3").innerText =
+            "Please enter valid numbers.";
+        return;
+    }
+
+    const change = ((newNumber - original) / original) * 100;
+
+    if (change > 0) {
+        document.getElementById("result3").innerText =
+            "Percentage increase: " + change.toFixed(2) + "%";
+    } else if (change < 0) {
+        document.getElementById("result3").innerText =
+            "Percentage decrease: " + Math.abs(change).toFixed(2) + "%";
+    } else {
+        document.getElementById("result3").innerText =
+            "There is no percentage change.";
+    }
+}
+
 </script>
 
 </body>
-  </html>
+</html>
