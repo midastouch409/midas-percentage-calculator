@@ -283,10 +283,27 @@ Exchange rate information will appear here.
 
 </div>
 
-
-<!-- DAILY EXCHANGE RATES -->
+    <!-- DISCOUNT CALCULATOR -->
 
 <div class="tool">
+
+    <h2 id="discount">💰 Discount Calculator</h2>
+
+    <label>Original Price</label>
+    <input type="number" id="originalPrice" placeholder="Enter original price">
+
+    <label>Discount Percentage (%)</label>
+    <input type="number" id="discountPercent" placeholder="Enter discount %">
+
+    <button onclick="calculateDiscount()">
+        Calculate Discount
+    </button>
+
+    <div class="result" id="discountResult">
+        Your discount result will appear here.
+    </div>
+
+</div>
 
 <h2 id="rates">📊 Latest Exchange Rates</h2>
 
@@ -913,7 +930,28 @@ async function convertMoney() {
             "Please try again later.";
     }
 }
+function calculateDiscount() {
+    const originalPrice = parseFloat(document.getElementById("originalPrice").value);
+    const discountPercent = parseFloat(document.getElementById("discountPercent").value);
+    const result = document.getElementById("discountResult");
 
+    if (isNaN(originalPrice) || isNaN(discountPercent)) {
+        result.innerHTML = "Please enter the original price and discount percentage.";
+        return;
+    }
+
+    if (originalPrice < 0 || discountPercent < 0 || discountPercent > 100) {
+        result.innerHTML = "Please enter valid values.";
+        return;
+    }
+
+    const discountAmount = originalPrice * (discountPercent / 100);
+    const finalPrice = originalPrice - discountAmount;
+
+    result.innerHTML =
+        "Discount: " + discountAmount.toLocaleString() +
+        "<br>Final Price: " + finalPrice.toLocaleString();
+}
 </script>
-</body>  
+    </body>  
 </html>
