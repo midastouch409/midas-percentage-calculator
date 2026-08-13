@@ -1011,6 +1011,29 @@ function calculateDiscount() {
         result.innerHTML = "No profit or loss — you broke even.";
     }
     }
+   function calculateSimpleInterest() {
+    const principal = parseFloat(document.getElementById("principal").value);
+    const interestRate = parseFloat(document.getElementById("interestRate").value);
+    const interestTime = parseFloat(document.getElementById("interestTime").value);
+    const result = document.getElementById("interestResult");
+
+    if (isNaN(principal) || isNaN(interestRate) || isNaN(interestTime)) {
+        result.innerHTML = "Please enter the principal, interest rate and time.";
+        return;
+    }
+
+    if (principal < 0 || interestRate < 0 || interestTime < 0) {
+        result.innerHTML = "Please enter valid values.";
+        return;
+    }
+
+    const interest = principal * (interestRate / 100) * interestTime;
+    const totalAmount = principal + interest;
+
+    result.innerHTML =
+        "Interest: " + interest.toLocaleString() +
+        "<br>Total Amount: " + totalAmount.toLocaleString();
+            } 
 </script>
     </body>  
 </html>
