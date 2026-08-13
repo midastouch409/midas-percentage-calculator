@@ -807,14 +807,10 @@ loadCurrencies();
 loadDailyRates();
 
 </script>
-  <!-- INTERNATIONAL CURRENCY CONVERTER -->
-
 <div class="tool">
-
-<h2>🌍 International Currency Converter</h2>
-
+<h2 id="currency">🌍 International Currency Converter</h2>
 <label>Amount</label>
-<input type="number" id="amount" placeholder="Enter amount">
+<input type="number" id="currencyAmount" placeholder="Example: 100" value="1">
 
 <label>From Currency</label>
 <select id="fromCurrency">
@@ -833,29 +829,12 @@ loadDailyRates();
 <option value="SAR">SAR — Saudi Riyal</option>
 </select>
 
-<label>To Currency</label>
-<select id="toCurrency">
-<option value="NGN">NGN — Nigerian Naira</option>
-<option value="USD">USD — US Dollar</option>
-<option value="GBP">GBP — British Pound</option>
-<option value="EUR">EUR — Euro</option>
-<option value="CAD">CAD — Canadian Dollar</option>
-<option value="AUD">AUD — Australian Dollar</option>
-<option value="JPY">JPY — Japanese Yen</option>
-<option value="CNY">CNY — Chinese Yuan</option>
-<option value="CHF">CHF — Swiss Franc</option>
-<option value="INR">INR — Indian Rupee</option>
-<option value="ZAR">ZAR — South African Rand</option>
-<option value="AED">AED — UAE Dirham</option>
-<option value="SAR">SAR — Saudi Riyal</option>
-</select>
-
-<button onclick="convertMoney()">
-Convert Currency
+<button onclick="convertCurrency()">
+    Convert Currency
 </button>
 
 <div class="result" id="currencyResult">
-Your converted amount will appear here.
+Enter an amount and choose currencies
 </div>
 
 <div class="rate-info" id="currencyRate">
