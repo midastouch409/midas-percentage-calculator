@@ -310,14 +310,17 @@ Exchange rate information will appear here.
 
     <h2 id="profitloss">📈 Profit & Loss Calculator</h2>
 
-    <label>Cost Price</label>
-    <input type="number" id="costPrice" placeholder="Enter cost price">
+    <label>Interest Rate (%)</label>
+    <input type="number" id="InterestRate" 
+placeholder="Enter interest rate">
 
-    <label>Selling Price</label>
-    <input type="number" id="sellingPrice" placeholder="Enter selling price">
+    <label>Time (Years)</label>
+    <input type="number" id="interestTime"
+        placeholder="Enter Time In Years">
 
-    <button onclick="calculateProfitLoss()">
-        Calculate Profit & Loss
+    <button 
+onclick="calculateSimpleInterest ()">
+        Calculate Interest 
     </button>
 
     <div class="result" id="profitLossResult">
