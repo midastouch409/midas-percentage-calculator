@@ -804,98 +804,10 @@ async function loadDailyRates() {
 loadCurrencies();
 
 loadDailyRates();
+</script>
 
 <script>
 
-async function convertMoney() {
-
-    const amount =
-        parseFloat(document.getElementById("amount").value);
-
-    const from =
-        document.getElementById("fromCurrency").value;
-
-    const to =
-        document.getElementById("toCurrency").value;
-
-    const result =
-        document.getElementById("currencyResult");
-
-    const rateInfo =
-        document.getElementById("currencyRate");
-
-    if (isNaN(amount) || amount <= 0) {
-
-        result.innerText =
-            "Please enter a valid amount.";
-
-        return;
-    }
-
-    if (from === to) {
-
-        result.innerText =
-            amount.toLocaleString() +
-            " " + from +
-            " = " +
-            amount.toLocaleString() +
-            " " + to;
-
-        rateInfo.innerText =
-            "1 " + from + " = 1 " + to;
-
-        return;
-    }
-
-    result.innerText =
-        "Getting latest exchange rate...";
-
-    try {
-
-        const response = await fetch(
-            "https://api.frankfurter.dev/v2/rate/" +
-            from + "/" + to
-        );
-
-        if (!response.ok) {
-            throw new Error("Rate unavailable");
-        }
-
-        const data = await response.json();
-
-        const converted =
-            amount * data.rate;
-
-        result.innerText =
-            amount.toLocaleString() +
-            " " + from +
-            " = " +
-            converted.toLocaleString(
-                undefined,
-                { maximumFractionDigits: 4 }
-            ) +
-            " " + to;
-
-        rateInfo.innerText =
-            "1 " + from +
-            " = " +
-            data.rate.toLocaleString(
-                undefined,
-                { maximumFractionDigits: 6 }
-            ) +
-            " " + to +
-            " • Rate date: " +
-            data.date;
-
-    } catch (error) {
-
-        result.innerText =
-            "Unable to get the exchange rate.";
-
-        rateInfo.innerText =
-            "Please try again later.";
-    }
-}
 function calculateDiscount() {
     const originalPrice = parseFloat(document.getElementById("originalPrice").value);
     const discountPercent = parseFloat(document.getElementById("discountPercent").value);
