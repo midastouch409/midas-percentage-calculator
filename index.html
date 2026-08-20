@@ -885,7 +885,7 @@ function calculateDiscount() {
         return;
     }
 
-    if (costPrice < 0 || sellingPrice < 0) {
+    if (costPrice <= 0 || sellingPrice < 0) {
         result.innerHTML = "Please enter valid prices.";
         return;
     }
